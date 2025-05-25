@@ -1,7 +1,10 @@
 package com.star.library_project.model;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -34,6 +37,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime createdAt;
+
     @NotBlank
     @Size(min = 2, max = 100)
     private String name;
@@ -52,7 +58,5 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Borrowing> borrowings;
-
-    private LocalDateTime createdAt;
 
 }
