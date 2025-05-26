@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JWTService {
+public class JwtService {
 
     private static final String SECRET_KEY = "lU97eDQeoeKXcGOc+ADPIFvZSlJjaoFchcOs+gcyIHU=";
 

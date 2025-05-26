@@ -7,6 +7,7 @@ import com.star.library_project.controller.RestBaseController;
 import com.star.library_project.controller.RootEntity;
 import com.star.library_project.dto.DtoUser;
 import com.star.library_project.jwt.AuthRequest;
+import com.star.library_project.jwt.AuthResponse;
 import com.star.library_project.service.IAuthenticationService;
 
 import jakarta.validation.Valid;
@@ -25,6 +26,12 @@ public class RestAuthenticationControllerImpl extends RestBaseController impleme
     @Override
     public RootEntity<DtoUser> register(@Valid @RequestBody AuthRequest input) {
         return ok(authenticationService.register(input));
+    }
+
+    @PostMapping("/authenticate")
+    @Override
+    public RootEntity<AuthResponse> authenticate(@Valid @RequestBody AuthRequest input) {
+        return ok(authenticationService.authenticate(input));
     }
 
 }

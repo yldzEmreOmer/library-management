@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.star.library_project.handler.AuthEntryPoint;
-import com.star.library_project.jwt.JWTAuthenticationFilter;
+import com.star.library_project.jwt.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +25,7 @@ public class SecurityConfig {
     private AuthenticationProvider authenticationProvider;
 
     @Autowired
-    private JWTAuthenticationFilter jwtAuthenticationFilter;
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
     private AuthEntryPoint authEntryPoint;
@@ -33,22 +33,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(
-                        request -> request.requestMatchers(REGISTER, AUTHENTICATE, REFRESH_TOKEN).permitAll()
-                                .anyRequest()
-                                .authenticated())
-                .exceptionHandling(handling -> {
-                    try {
-                        handling.authenticationEntryPoint(authEntryPoint).and()
-                                .sessionManagement(
-                                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                                .authenticationProvider(authenticationProvider)
-                                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-                    } catch (Exception e) {
-
-                        e.printStackTrace();
-                    }
-                });
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers(REGISTER, AUTHENTICATE, REFRESH_TOKEN).permitAll()
+                        .anyRequest().authenticated())
+                .exceptionHandling(handling -> handling
+                        .authenticationEntryPoint(authEntryPoint))
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

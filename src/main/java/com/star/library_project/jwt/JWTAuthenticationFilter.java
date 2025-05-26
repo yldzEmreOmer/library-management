@@ -13,7 +13,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.star.library_project.exception.BaseException;
 import com.star.library_project.exception.ErrorMessage;
 import com.star.library_project.exception.MessageType;
-
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,10 +20,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class JWTAuthenticationFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JWTService jwtService;
+    private JwtService jwtService;
 
     @Autowired
     private UserDetailsService userDetailsService;
