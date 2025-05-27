@@ -18,6 +18,7 @@ import com.star.library_project.exception.MessageType;
 import com.star.library_project.jwt.AuthRequest;
 import com.star.library_project.jwt.AuthResponse;
 import com.star.library_project.jwt.JwtService;
+import com.star.library_project.jwt.RefreshTokenRequest;
 import com.star.library_project.model.RefreshToken;
 import com.star.library_project.model.Role;
 import com.star.library_project.model.User;
@@ -87,4 +88,25 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         }
     }
 
+    public boolean isValidRefreshToken(Date expiredDate) {
+        return new Date().before(expiredDate);
+    }
+
+    @Override
+    public AuthResponse refreshToken(RefreshTokenRequest input) {
+
+        Optional<RefreshToken> optRefreshToken = refreshTokenRepository.findByRefreshToken(input.getRefreshToken());
+        if (optRefreshToken.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.REFRESH_TOKEN_NOT_FOUND, "Refresh token bulunamadı"));
+        }
+        if (!isValidRefreshToken(optRefreshToken.get().getExpiredDate())) {
+            throw new BaseException(
+                    new ErrorMessage(MessageType.REFRESH_TOKEN_IS_EXPIRED, "Refresh token süresi doldu"));
+        }
+
+        User user = optRefreshToken.get().getUser();
+        String accessToken = jwtService.generateToken(user);
+        RefreshToken newRefreshToken = createRefreshToken(user);
+        return new AuthResponse(accessToken, newRefreshToken.getRefreshToken());
+    }
 }
