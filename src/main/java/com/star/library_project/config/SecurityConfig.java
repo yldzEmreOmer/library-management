@@ -17,32 +17,32 @@ import com.star.library_project.jwt.JwtAuthenticationFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    public static final String REGISTER = "/register";
-    public static final String AUTHENTICATE = "/authenticate";
-    public static final String REFRESH_TOKEN = "/refreshToken";
+        public static final String REGISTER = "/register";
+        public static final String AUTHENTICATE = "/authenticate";
+        public static final String REFRESH_TOKEN = "/refreshToken";
 
-    @Autowired
-    private AuthenticationProvider authenticationProvider;
+        @Autowired
+        private AuthenticationProvider authenticationProvider;
 
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+        @Autowired
+        private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Autowired
-    private AuthEntryPoint authEntryPoint;
+        @Autowired
+        private AuthEntryPoint authEntryPoint;
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers(REGISTER, AUTHENTICATE, REFRESH_TOKEN).permitAll()
-                        .anyRequest().authenticated())
-                .exceptionHandling(handling -> handling
-                        .authenticationEntryPoint(authEntryPoint))
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+                http.csrf(csrf -> csrf.disable())
+                                .authorizeHttpRequests(request -> request
+                                                .requestMatchers(REGISTER, AUTHENTICATE, REFRESH_TOKEN).permitAll()
+                                                .anyRequest().authenticated())
+                                .exceptionHandling(handling -> handling
+                                                .authenticationEntryPoint(authEntryPoint))
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                .authenticationProvider(authenticationProvider)
+                                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+                return http.build();
+        }
 }
