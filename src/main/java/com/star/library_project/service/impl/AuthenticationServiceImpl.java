@@ -22,8 +22,8 @@ import com.star.library_project.jwt.RefreshTokenRequest;
 import com.star.library_project.model.RefreshToken;
 import com.star.library_project.model.Role;
 import com.star.library_project.model.User;
-import com.star.library_project.reporistory.RefreshTokenRepository;
-import com.star.library_project.reporistory.UserRepository;
+import com.star.library_project.repository.RefreshTokenRepository;
+import com.star.library_project.repository.UserRepository;
 import com.star.library_project.service.IAuthenticationService;
 
 @Service

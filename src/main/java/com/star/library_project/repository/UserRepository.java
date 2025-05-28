@@ -1,4 +1,4 @@
-package com.star.library_project.reporistory;
+package com.star.library_project.repository;
 
 import java.util.Optional;
 

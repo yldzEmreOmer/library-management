@@ -17,7 +17,7 @@ import com.star.library_project.exception.BaseException;
 import com.star.library_project.exception.ErrorMessage;
 import com.star.library_project.exception.MessageType;
 import com.star.library_project.model.User;
-import com.star.library_project.reporistory.UserRepository;
+import com.star.library_project.repository.UserRepository;
 
 @Configuration
 public class AppConfig {
