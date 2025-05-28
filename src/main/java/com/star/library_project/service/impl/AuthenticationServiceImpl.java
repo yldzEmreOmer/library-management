@@ -11,7 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.star.library_project.dto.DtoUser;
+import com.star.library_project.dto.request.DtoUserRequest;
 import com.star.library_project.exception.BaseException;
 import com.star.library_project.exception.ErrorMessage;
 import com.star.library_project.exception.MessageType;
@@ -53,9 +53,9 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     }
 
     @Override
-    public DtoUser register(AuthRequest input) {
+    public DtoUserRequest register(AuthRequest input) {
         User savedUser = userRepository.save(createUser(input));
-        DtoUser dtoUser = new DtoUser();
+        DtoUserRequest dtoUser = new DtoUserRequest();
         BeanUtils.copyProperties(savedUser, dtoUser);
         return dtoUser;
 

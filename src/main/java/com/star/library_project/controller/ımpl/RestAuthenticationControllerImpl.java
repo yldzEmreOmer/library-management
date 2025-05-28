@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.star.library_project.controller.IRestAuthenticationController;
 import com.star.library_project.controller.RestBaseController;
 import com.star.library_project.controller.RootEntity;
-import com.star.library_project.dto.DtoUser;
+import com.star.library_project.dto.request.DtoUserRequest;
 import com.star.library_project.jwt.AuthRequest;
 import com.star.library_project.jwt.AuthResponse;
 import com.star.library_project.jwt.RefreshTokenRequest;
@@ -25,7 +25,7 @@ public class RestAuthenticationControllerImpl extends RestBaseController impleme
 
     @PostMapping("/register")
     @Override
-    public RootEntity<DtoUser> register(@Valid @RequestBody AuthRequest input) {
+    public RootEntity<DtoUserRequest> register(@Valid @RequestBody AuthRequest input) {
         return ok(authenticationService.register(input));
     }
 
